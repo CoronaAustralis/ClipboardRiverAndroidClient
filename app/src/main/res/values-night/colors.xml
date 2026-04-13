@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cr_primary">#9FD0CC</color>
+    <color name="cr_primary_variant">#73B4AE</color>
+    <color name="cr_on_primary">#003735</color>
+    <color name="cr_secondary">#B1CCC6</color>
+    <color name="cr_secondary_variant">#8DA7A1</color>
+    <color name="cr_on_secondary">#1D3430</color>
+    <color name="cr_surface">#151C1B</color>
+    <color name="cr_on_surface">#DEE4E2</color>
+    <color name="cr_background">#0E1514</color>
+    <color name="cr_on_background">#DEE4E2</color>
+    <color name="cr_error">#FFB4AB</color>
+    <color name="cr_on_error">#690005</color>
+    <color name="cr_transparent">#00000000</color>
+</resources>

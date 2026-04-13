@@ -1,0 +1,40 @@
+# Gradle / Android build outputs
+.gradle/
+**/build/
+captures/
+.cxx/
+.externalNativeBuild/
+out/
+
+# Local tool state created in this workspace
+.android-home/
+.gradle-user-home/
+.kotlin/
+
+# Android Studio / IntelliJ local-only files
+*.iml
+.idea
+
+# Machine-specific SDK / env / signing configuration
+local.properties
+.env
+.env.*
+*.local
+signing.properties
+keystore.properties
+*.jks
+*.keystore
+
+# Packaged artifacts
+*.apk
+*.aab
+*.ap_
+*.hprof
+*.log
+*.orig
+*.rej
+*.tmp
+
+# OS cruft
+.DS_Store
+Thumbs.db

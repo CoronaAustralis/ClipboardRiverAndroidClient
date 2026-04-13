@@ -1,0 +1,215 @@
+<resources>
+    <string name="app_name">Clipboard River</string>
+
+    <string name="action_capture">记录内容</string>
+    <string name="action_receive">接收内容</string>
+    <string name="action_copy">复制</string>
+    <string name="action_delete">删除</string>
+    <string name="action_close">关闭</string>
+    <string name="action_understood">知道了</string>
+
+    <string name="main_tagline">随手记录，按需接收</string>
+    <string name="badge_device_registered">设备已注册</string>
+    <string name="badge_device_not_registered">尚未注册</string>
+    <string name="badge_pending_count">待同步 %1$d</string>
+    <string name="badge_overlay_permission_granted">悬浮窗已授权</string>
+    <string name="badge_overlay_permission_denied">悬浮窗未授权</string>
+    <string name="section_realtime_status">实时状态</string>
+    <string name="status_online_short">在线</string>
+    <string name="status_idle_short">待机</string>
+
+    <string name="section_overlay_permission">悬浮窗权限</string>
+    <string name="button_grant_overlay_permission">去授权悬浮窗</string>
+
+    <string name="section_registration_device">注册与设备</string>
+    <string name="field_server_address">服务器地址</string>
+    <string name="field_device_nickname">设备昵称</string>
+    <string name="field_enrollment_code">注册码</string>
+    <string name="button_register">注册</string>
+    <string name="button_reregister">重注册</string>
+    <string name="button_sign_out">退出注册</string>
+
+    <string name="section_connection_overview">连接概览</string>
+    <string name="label_websocket">WebSocket</string>
+    <string name="label_pending_count">待同步数量</string>
+    <string name="label_last_heartbeat">最近心跳</string>
+    <string name="label_last_upload">最近上传</string>
+    <string name="label_last_received">最近接收</string>
+    <string name="value_none">尚无</string>
+    <string name="button_reconnect">重新连接</string>
+
+    <string name="section_history_overview">历史概览</string>
+    <string name="label_pending_history">待同步</string>
+    <string name="label_retention_policy">保留策略</string>
+    <string name="label_history_sync_network">历史同步网络</string>
+    <string name="value_wifi_only">仅 Wi-Fi</string>
+    <string name="value_any_network">任意网络</string>
+    <string name="button_upload_history">上传历史</string>
+
+    <string name="section_sync_settings">同步设置</string>
+    <string name="section_app_info">应用信息</string>
+    <string name="setting_send_sync">发送同步</string>
+    <string name="setting_receive_realtime">实时接收</string>
+    <string name="setting_history_sync_wifi_only">仅 Wi-Fi 下同步历史</string>
+    <string name="label_server_image_limit">服务端图片上限</string>
+    <string name="label_text_batch_limit">文本批量上限</string>
+    <string name="label_local_history_mode">本地历史模式</string>
+    <string name="local_history_mode_forever_short">永久</string>
+    <string name="local_history_mode_days_short">保留天数</string>
+    <string name="local_history_mode_disabled_short">关闭</string>
+    <string name="local_history_mode_forever_long">永久保留</string>
+    <string name="local_history_mode_disabled_long">已关闭</string>
+    <plurals name="local_history_mode_days_long">
+        <item quantity="one">保留 %1$d 天</item>
+        <item quantity="other">保留 %1$d 天</item>
+    </plurals>
+    <string name="field_local_history_retention_days">本地历史保留天数</string>
+    <string name="field_min_chars">最小字符数</string>
+    <string name="field_max_chars">最大字符数</string>
+    <string name="error_max_chars_less_than_min">最大字符数不能小于最小字符数。</string>
+    <string name="button_save_settings">保存设置</string>
+    <string name="label_app_version">版本号</string>
+    <string name="label_open_source">开源地址</string>
+    <string name="app_open_source_url">https://github.com/CoronaAustralis/ClipboardRiver</string>
+
+    <string name="section_local_history">本地历史</string>
+    <string name="history_empty">还没有本地历史记录。</string>
+    <string name="content_image_preview">图片: %1$s</string>
+    <string name="history_image_default_name">图片文件</string>
+    <string name="history_action_title_text">文本记录</string>
+    <string name="history_action_title_image">图片记录</string>
+    <string name="history_text_copied">文本已复制到剪贴板。</string>
+    <string name="history_copy_failed">复制这条文本失败。</string>
+    <string name="history_item_deleted">这条历史记录已删除。</string>
+    <string name="history_delete_failed">删除这条历史记录失败。</string>
+    <string name="history_image_open_missing">这张图片文件已经丢失，无法打开。</string>
+    <string name="dialog_skipped_title">已跳过</string>
+    <string name="sync_state_pending">待上传</string>
+    <string name="sync_state_synced">已上传</string>
+    <string name="sync_state_failed">失败</string>
+    <string name="sync_state_skipped">已跳过</string>
+    <string name="skipped_reason_image_default">这张图片已被跳过，常见原因是源文件已丢失，或图片超过服务端上传大小限制。</string>
+    <string name="skipped_reason_text_default">这条文本已被跳过。</string>
+    <string name="image_skip_reason_server_limit">这张图片已被跳过，因为它超过了服务端上传大小限制。</string>
+    <string name="image_skip_reason_file_missing">这张图片已被跳过，因为源文件已经丢失。</string>
+    <string name="image_limit_not_provided">未下发</string>
+    <string name="image_limit_unlimited">不限</string>
+
+    <string name="tab_overview">概览</string>
+    <string name="tab_history">历史</string>
+    <string name="tab_settings">设置</string>
+
+    <string name="receive_recent_content_title">最近收到的内容</string>
+    <string name="button_open_image">打开图片</string>
+    <string name="panel_receive_preparing">准备接收远程内容...</string>
+    <string name="connection_status_format">连接状态: %1$s</string>
+    <string name="status_not_connected">尚未连接</string>
+    <string name="status_not_connected_yet">尚未连接</string>
+
+    <string name="notification_content_text">常驻入口：记录内容 / 接收内容</string>
+    <string name="notification_channel_name">Clipboard River 操作入口</string>
+    <string name="notification_channel_description">Clipboard River 常驻操作入口</string>
+
+    <string name="toast_overlay_permission_required">请先授权悬浮窗权限。</string>
+    <string name="toast_overlay_show_failed">悬浮窗显示失败，请确认权限仍然有效。</string>
+    <string name="toast_invalid_image_uri">图片地址无效，暂时无法打开。</string>
+    <string name="toast_no_image_viewer">当前设备没有可用的看图应用。</string>
+    <string name="toast_open_image_failed">打开图片失败，请稍后再试。</string>
+    <string name="toast_no_shared_image">没有收到可用的图片内容。</string>
+    <string name="main_register_failed">注册失败。</string>
+    <string name="main_sign_out_success">已退出注册。</string>
+    <string name="main_heartbeat_success">心跳成功，正在恢复实时接收。</string>
+    <string name="main_reconnect_failed">重新连接失败。</string>
+    <string name="main_upload_history_failed">上传历史失败。</string>
+    <string name="main_settings_saved">同步设置已保存。</string>
+    <string name="main_settings_saved_history_cleared">同步设置已保存，本地历史已关闭并清空。</string>
+    <string name="main_settings_saved_forever">同步设置已保存，本地历史改为永久保留。</string>
+    <plurals name="main_settings_saved_days">
+        <item quantity="one">同步设置已保存，本地历史改为保留 %1$d 天。</item>
+        <item quantity="other">同步设置已保存，本地历史改为保留 %1$d 天。</item>
+    </plurals>
+    <string name="main_settings_save_failed">保存设置失败。</string>
+
+    <string name="validation_server_required">请输入服务器地址。</string>
+    <string name="validation_nickname_required">请输入设备昵称。</string>
+    <string name="validation_enrollment_required">请输入注册码。</string>
+    <string name="sync_register_success">注册成功。</string>
+
+    <string name="capture_no_text">系统剪贴板里没有可记录的文本。</string>
+    <string name="capture_suppressed">这段文本刚由远端写入，本次不再回传。</string>
+    <string name="capture_duplicate_text">短时间内检测到重复记录，本次已忽略。</string>
+    <string name="capture_too_short">文本太短，未进入记录规则。</string>
+    <string name="capture_too_long">文本过长，未进入记录规则。</string>
+    <string name="capture_pending_queued">已加入本地待同步队列。</string>
+    <string name="capture_synced">已记录内容并实时上传。</string>
+    <string name="capture_upload_failed_saved">实时上传失败，已保留为待同步记录。</string>
+    <string name="capture_saved_unregistered">设备尚未注册，文本已保存在本地历史中。</string>
+    <string name="capture_saved_sync_disabled">发送同步已关闭，文本已保留在本地历史中。</string>
+    <string name="capture_dropped_after_upload_fail_history_disabled">实时上传失败，且本地历史已关闭，本次内容已丢弃。</string>
+    <string name="capture_dropped_history_disabled">本地历史已关闭，且当前不会上传，本次内容已丢弃。</string>
+    <string name="capture_dropped_upload_fail_no_history">本地历史已关闭，实时上传失败后不会保留待补传记录。</string>
+
+    <string name="shared_image_read_failed">读取分享图片失败。</string>
+    <string name="capture_duplicate_image">短时间内检测到重复图片，本次已忽略。</string>
+    <string name="image_pending_queued">图片已加入本地待同步队列。</string>
+    <string name="image_dropped_server_limit_no_history">图片超过服务端上传大小限制，且本地历史已关闭，本次内容已丢弃。</string>
+    <string name="image_saved_server_limit_local_only">图片超过服务端上传大小限制，已仅保存在本地历史中。</string>
+    <string name="image_synced">已接收分享图片并实时上传。</string>
+    <string name="image_upload_failed_saved">图片实时上传失败，已保留为待同步记录。</string>
+    <string name="image_saved_unregistered">设备尚未注册，图片已保存在本地历史中。</string>
+    <string name="image_saved_sync_disabled">发送同步已关闭，图片已保存在本地历史中。</string>
+    <string name="image_dropped_after_upload_fail_history_disabled">实时上传失败，且本地历史已关闭，本次图片已丢弃。</string>
+    <string name="image_dropped_history_disabled">本地历史已关闭，且当前不会上传，本次图片已丢弃。</string>
+    <string name="image_history_disabled_no_pending">本地历史已关闭，图片不会保留待补传记录。</string>
+
+    <string name="not_registered">设备尚未注册。</string>
+    <string name="wifi_only_sync_required">已开启仅 Wi-Fi 下同步历史，请连接 Wi-Fi 后重试。</string>
+    <string name="no_pending_history_manual">没有待同步的本地历史。</string>
+    <string name="no_pending_history_auto">没有待同步的本地历史。</string>
+    <plurals name="history_synced_count">
+        <item quantity="one">已同步 %1$d 条本地历史。</item>
+        <item quantity="other">已同步 %1$d 条本地历史。</item>
+    </plurals>
+    <plurals name="history_skipped_images_count">
+        <item quantity="one">%1$d 张图片因文件缺失或超过服务端限制已跳过。</item>
+        <item quantity="other">%1$d 张图片因文件缺失或超过服务端限制已跳过。</item>
+    </plurals>
+    <string name="history_sync_failed">同步历史失败。</string>
+    <string name="heartbeat_failed">心跳失败。</string>
+
+    <string name="receive_disabled_status">实时接收已关闭。</string>
+    <string name="receive_disabled_error">请先在主页打开“实时接收”，再使用接收面板。</string>
+    <string name="receive_registration_required_status">尚未注册设备。</string>
+    <string name="receive_registration_required_error">请先完成注册，再接收内容。</string>
+    <string name="receive_waiting_remote">正在等待远程内容...</string>
+    <string name="receive_text_write_failed_runtime">收到文本，但写入系统剪贴板失败。</string>
+    <string name="receive_text_success_status">已接收并写入系统剪贴板。</string>
+    <string name="receive_text_clipboard_failed_status">已收到文本，但写入剪贴板失败。</string>
+    <string name="receive_clipboard_access_error">请确认当前设备允许剪贴板访问。</string>
+    <string name="receive_image_failed_status">接收图片失败。</string>
+    <string name="receive_image_default_name">远程图片</string>
+    <string name="receive_image_download_requires_registration">当前设备尚未注册，无法下载远端图片。</string>
+    <string name="receive_image_saved_status">已接收图片并保存到系统图片目录。</string>
+    <string name="receive_image_saved_preview">已保存: %1$s</string>
+    <string name="receive_image_download_failed">下载远端图片失败。</string>
+
+    <string name="ws_stopped">已停止实时接收。</string>
+    <string name="ws_registration_required">设备尚未注册。</string>
+    <string name="ws_receive_disabled">实时接收已关闭。</string>
+    <string name="ws_connecting">正在心跳与建连...</string>
+    <string name="ws_connect_failed_retry">连接失败，稍后重试...</string>
+    <string name="ws_connect_failed">连接失败。</string>
+    <string name="ws_reconnect_stopped">前台重连已停止，等待再次打开页面。</string>
+    <string name="ws_reconnect_stopped_error">重连已停止。</string>
+    <string name="ws_handshaking">正在完成握手...</string>
+    <string name="ws_online">实时接收在线</string>
+    <string name="ws_switching_session">切换实时接收会话。</string>
+
+    <string name="image_storage_shared_read_failed">无法读取分享的图片内容。</string>
+    <string name="image_storage_shared_empty">分享的图片内容为空。</string>
+    <string name="image_storage_pictures_create_failed">无法在系统图片目录中创建文件。</string>
+    <string name="image_storage_pictures_write_failed">无法写入系统图片目录。</string>
+
+    <string name="share_image_processing">正在处理分享图片...</string>
+    <string name="capture_processing_current">正在记录当前内容...</string>
+</resources>

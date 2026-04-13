@@ -1,0 +1,42 @@
+<resources>
+    <style name="Theme.ClipboardRiver" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/cr_primary</item>
+        <item name="colorPrimaryVariant">@color/cr_primary_variant</item>
+        <item name="colorOnPrimary">@color/cr_on_primary</item>
+        <item name="colorSecondary">@color/cr_secondary</item>
+        <item name="colorSecondaryVariant">@color/cr_secondary_variant</item>
+        <item name="colorOnSecondary">@color/cr_on_secondary</item>
+        <item name="colorSurface">@color/cr_surface</item>
+        <item name="colorOnSurface">@color/cr_on_surface</item>
+        <item name="android:colorBackground">@color/cr_background</item>
+        <item name="colorOnBackground">@color/cr_on_background</item>
+        <item name="colorError">@color/cr_error</item>
+        <item name="colorOnError">@color/cr_on_error</item>
+        <item name="colorAccent">@color/cr_secondary</item>
+        <item name="android:windowSplashScreenBackground">@color/cr_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_splash_foreground_art</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.ClipboardRiver.NoDisplay" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowNoDisplay">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+    <style name="Theme.ClipboardRiver.TransparentBridge" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+</resources>
