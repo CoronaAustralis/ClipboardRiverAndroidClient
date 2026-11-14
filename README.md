@@ -1,149 +1,60 @@
-<p align="center">
-  <img src="artwork/android-icons/ic_launcher_playstore_512.png" alt="Clipboard River logo" width="128" />
-</p>
+# Clipboard River Android
 
-<h1 align="center">Clipboard River</h1>
+English · [简体中文](README.zh-CN.md)
 
-<p align="center">
-  <a href="README.md">English</a> | <a href="README.zh-CN.md">简体中文</a>
-</p>
+A Kotlin and Jetpack Compose clipboard client for Android.
 
-<p align="center">
-  An Android clipboard sync client built around foreground-triggered actions,
-  focused on reliable text capture, short-lived realtime receive sessions,
-  local history retention, and Android-friendly image sharing.
-</p>
+## Features
 
-## Why this app uses a pinned notification
+- Send clipboard text manually, with a configurable length range of 2–1024 characters by default.
+- Receive text while the app is in the foreground and copy it to the system clipboard.
+- Send a single image or other file through the Android share menu.
+- Save received images to `Pictures/ClipboardRiver` and other files to `Download/ClipboardRiver`, with an open action.
+- Notification shortcuts for sending the clipboard or opening a receive window.
+- A floating receive window that waits up to 60 seconds and closes after showing its result.
+- A home screen and separate settings page, English and Simplified Chinese, and system light/dark themes.
 
-Modern Android treats clipboard access as a foreground interaction. Background apps cannot reliably read clipboard contents the way desktop apps do, and trying to keep a permanent background clipboard sync loop leads to inconsistent behavior, aggressive process kills, and a poor user experience.
+There is no local history, offline queue, history import, or recent-50 synchronization. Events missed while disconnected are not recovered.
 
-Clipboard River Android therefore uses a pinned notification in the status bar / notification shade:
+## Getting started
 
-- `Capture content`: opens a compact overlay, brings the app into an allowed foreground context, then reads the current clipboard once.
-- `Receive content`: opens a compact overlay and starts a short-lived foreground WebSocket session for remote receive.
+1. Open enrollment on the server and obtain its current five-minute code.
+2. Enter the server address, optional device nickname, and code in the app.
+3. Send clipboard text from the home screen. To send an image or file, select Clipboard River from the Android share menu.
+4. Keep the app visible to receive, or enable notifications and the overlay permission to receive through a floating window.
 
-This design exists mainly because of Android clipboard restrictions:
+Home-screen sending and Android sharing do not require overlay permission. Notification actions require it; the settings page provides an explicit permission entry.
 
-- Clipboard access is most reliable when the app is foregrounded by explicit user action.
-- Android does not provide a good desktop-style "always watch clipboard in background" model for third-party apps.
-- Foreground-only receive sessions are more predictable on mobile devices with frequent background process limits and network suspension.
-- A small overlay is less disruptive than launching a full-screen activity every time.
+Text sending preserves the previous behavior: trim surrounding whitespace, then apply the configured Kotlin string-length range. Received text is preserved and is not uploaded again.
 
-In short: the pinned notification is not a cosmetic choice. It is the practical way to make clipboard sync behave well on Android.
+## Protocol
 
-## Current capabilities
+The client implements registration, device profile, single text upload, file upload/download, and WebSocket events.
 
-- On-demand text capture from the system clipboard
-- Foreground realtime receive for remote text items
-- Image import through Android share sheet
-- Remote image download to `Pictures/ClipboardRiver`
-- Local history for manually captured text and shared images
-- Pending queue and manual history upload
-- Wi-Fi-only rule for history sync
-- English and Simplified Chinese UI
-- Compact overlay actions from both the main screen and the pinned notification
+- Registration sends the installation UUID, enrollment code, nickname, app name, and version. Existing credentials and connection settings are replaced only after successful registration.
+- Profile requests update only the app name/version and refresh server settings.
+- WebSocket sends only the initial `hello`. The connection is marked ready after `hello_ack`.
+- No application heartbeat or `ack`, legacy cursors, capability declarations, or `client_item_id`.
+- Ignore `clipboard.sync_changed` and unknown event types.
+- A foreground connection makes at most five attempts, with a ten-second handshake timeout. It is released after the last foreground owner leaves.
+- HTTP 401 stops retries and requests registration again.
+- Uploads have no idempotency key and are never automatically replayed. Unknown outcomes are shown explicitly. Upload success confirms server acceptance, not delivery to other devices.
+- Upload size settings distinguish a positive byte limit, `0` for no application-level limit, and `-1` for disabled file uploads. This does not restrict downloads.
 
-## Content behavior
+## Android and storage
 
-| Source | Behavior | Stored in local history |
-| --- | --- | --- |
-| Manual text capture | Reads clipboard once, optionally uploads immediately | Yes |
-| Shared image into app | Imports image file, optionally uploads immediately | Yes |
-| Remote text receive | Writes text to system clipboard immediately | No |
-| Remote image receive | Downloads image and saves it to `Pictures/ClipboardRiver` | No |
+One ongoing notification provides shortcuts and is reused as the foreground-service notification during floating operations. It remains as the shortcut after the operation ends. Android may separately show its own overlay notice. There is no indefinite background receiving or clipboard monitoring.
 
-Notes:
+Preferences use DataStore; device credentials use EncryptedSharedPreferences. Uploads use the app cache `transfers` directory, with cleanup after completion, failure, cancellation, and the next startup.
 
-- Local history is the history of local manual actions.
-- Remote receive is intentionally not added to local history.
-- Android image copy/paste is not treated like desktop clipboard images. Image sending uses Android's share flow instead of clipboard monitoring.
+Old history databases and files remain untouched and are no longer accessed. Downloaded public files remain available. Connection state and the latest result are held only in memory.
 
-## Main screens
+## Build and validation
 
-- `Overview`: registration, connection status, quick actions, reconnect
-- `History`: local records, pending upload count, manual history upload
-- `Settings`: server URL, device nickname, sync toggles, retention policy, text length rules, Wi-Fi-only history sync
+Requires Android 12L/API 32 or newer and Android SDK 35. The Gradle daemon uses JDK 21; source compatibility targets Java 17.
 
-History long-press actions:
-
-- Text item: `Copy` or `Delete`
-- Image item: `Open image` or `Delete`
-
-## Sync model
-
-- The app starts a pinned notification after launch.
-- `Capture content` can work even before registration:
-  - save locally if local history is enabled
-  - upload immediately only if the device is registered and `Send sync` is enabled
-- `Receive content` requires registration and `Realtime receive` enabled.
-- Main screen realtime receive only stays connected while the app is in foreground.
-- Overlay receive sessions also connect only while that overlay is active.
-- Reconnect is limited to the active foreground session. There is no infinite background reconnect loop.
-
-## Local storage
-
-- App config: `DataStore`
-- Device token: `EncryptedSharedPreferences`
-- Local history: `SQLiteOpenHelper`-based repository
-- Shared image history files: `Android/data/<package>/files/history_images`
-- Remote received images: `Pictures/ClipboardRiver`
-
-## Tech stack
-
-- Kotlin
-- Jetpack Compose
-- Coroutines / Flow
-- DataStore
-- EncryptedSharedPreferences
-- OkHttp
-- kotlinx.serialization
-- Manual `AppContainer` dependency wiring
-
-## Project structure
-
-- `MainActivity`: main tabs and app-level UI
-- `ActionNotificationService`: pinned notification and overlay action panel
-- `NotificationActionActivity` / `NotificationCaptureActivity` / `ShareImageActivity`: lightweight bridge activities for notification/share flows
-- `SyncCoordinator`: registration, upload, settings update, history flush
-- `CaptureCoordinator`: one-shot local capture flow
-- `ReceiveCoordinator`: remote receive flow
-- `RealtimeSessionManager`: WebSocket ownership and foreground reconnect behavior
-- `HistoryRepository`: local history and runtime state storage
-- `ConfigRepository`: user settings and server capability storage
-- `ApiClient`: HTTP / WebSocket API access
-
-## Requirements
-
-- Android 12L or newer (`minSdk 32`)
-- JDK 17
-- Recent Android Studio
-- A compatible Clipboard River server
-
-## Build
-
-### Android Studio
-
-1. Open this folder in Android Studio.
-2. Let Gradle sync.
-3. Run the `app` configuration on a device or emulator.
-
-### Command line
-
-```bash
-./gradlew assembleDebug
+```powershell
+.\gradlew.bat :app:testDebugUnitTest :app:assembleDebug :app:lintDebug
 ```
 
-## Permissions
-
-- `POST_NOTIFICATIONS`: shows the pinned action notification
-- `SYSTEM_ALERT_WINDOW`: displays the compact action overlay
-- `INTERNET` / `ACCESS_NETWORK_STATE`: server communication and network checks
-
-## Current limitations
-
-- No boot-time automatic restore of the pinned notification. After device reboot, open the app once to restore it.
-- No background infinite reconnect.
-- No desktop-style background clipboard polling.
-- Image send is based on Android share intents, not clipboard image monitoring.
-- Cleartext HTTP is currently allowed to support local/test server deployments.
+Debug APK: `app/build/outputs/apk/debug/app-debug.apk`.

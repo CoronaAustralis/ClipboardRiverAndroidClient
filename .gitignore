@@ -22,6 +22,7 @@ local.properties
 *.local
 signing.properties
 keystore.properties
+/release-signing/
 *.jks
 *.keystore
 

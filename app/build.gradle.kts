@@ -1,9 +1,17 @@
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
+}
+
+val releaseSigningProperties = Properties().apply {
+    val propertiesFile = rootProject.file("release-signing/signing.properties")
+    if (propertiesFile.isFile) {
+        propertiesFile.inputStream().use { load(it) }
+    }
 }
 
 android {
@@ -14,12 +22,29 @@ android {
         applicationId = "com.clipboardriver.client"
         minSdk = 32
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0"
+        // Only update versionName before creating a matching v<versionName> release tag.
+        versionName = "0.2.0"
+        val versionParts = versionName!!.split('.').map(String::toInt)
+        require(versionParts.size == 3 && versionParts[0] >= 0 &&
+            versionParts[1] in 0..999 && versionParts[2] in 0..999) {
+            "versionName must be major.minor.patch, with minor and patch in 0..999."
+        }
+        versionCode = Math.toIntExact(
+            versionParts[0].toLong() * 1_000_000 + versionParts[1] * 1_000L + versionParts[2],
+        )
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = rootProject.file("release-signing/release.keystore")
+            storePassword = releaseSigningProperties.getProperty("storePassword")
+            keyAlias = releaseSigningProperties.getProperty("keyAlias")
+            keyPassword = releaseSigningProperties.getProperty("keyPassword")
         }
     }
 
@@ -31,7 +56,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
@@ -79,6 +104,7 @@ dependencies {
     implementation(libs.compose.material.icons.extended)
 
     testImplementation(libs.junit)
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

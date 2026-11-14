@@ -1,0 +1,70 @@
+name: Release APK
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android build dependencies
+        run: sdkmanager 'platforms;android-35' 'build-tools;36.0.0'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Restore release signing files
+        env:
+          SIGNING_PROPERTIES_BASE64: ${{ secrets.ANDROID_SIGNING_PROPERTIES }}
+          SIGNING_KEYSTORE_BASE64: ${{ secrets.ANDROID_SIGNING_KEYSTORE }}
+        run: |
+          umask 077
+          : "${SIGNING_PROPERTIES_BASE64:?Repository secret ANDROID_SIGNING_PROPERTIES is required}"
+          : "${SIGNING_KEYSTORE_BASE64:?Repository secret ANDROID_SIGNING_KEYSTORE is required}"
+          mkdir -p release-signing
+          printf '%s' "$SIGNING_PROPERTIES_BASE64" | base64 --decode > release-signing/signing.properties
+          printf '%s' "$SIGNING_KEYSTORE_BASE64" | base64 --decode > release-signing/release.keystore
+
+      - name: Build signed release APK
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon :app:assembleRelease
+          mkdir -p dist
+          cp app/build/outputs/apk/release/app-release.apk "dist/ClipboardRiver-${GITHUB_REF_NAME}.apk"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          apk="dist/ClipboardRiver-${GITHUB_REF_NAME}.apk"
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "$apk" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" "$apk" \
+              --verify-tag --title "$GITHUB_REF_NAME" --generate-notes
+          fi
+
+      - name: Remove signing files
+        if: always()
+        run: rm -f -- release-signing/signing.properties release-signing/release.keystore

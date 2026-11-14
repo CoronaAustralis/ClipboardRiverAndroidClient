@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="0dp"
-                android:text="@string/action_close" />
+                android:text="@string/cr_close" />
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
@@ -91,7 +91,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/receive_recent_content_title"
+                android:text="@string/cr_latest_operation"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
                 android:textColor="?attr/colorOnSurface" />
 
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
-                android:maxLines="4"
+                android:maxLines="2"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="?attr/colorOnSurface" />
 
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:minWidth="0dp"
-                android:text="@string/button_open_image"
+                android:text="@string/cr_open_file"
                 android:visibility="gone" />
         </LinearLayout>
 
